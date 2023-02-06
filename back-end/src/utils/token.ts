@@ -3,7 +3,8 @@ import { sign } from 'jsonwebtoken';
 export interface IPayload {
   id: number;
   name: string;
-  role: string;
+  driver: boolean;
+  admin: boolean;
   birthday: Date;
   license: number;
   controller: string;
@@ -12,8 +13,8 @@ export interface IPayload {
 const secret = process.env.JWT_SECRET || 'jwtsecret';
 
 const Token = {
-  makeToken({ id, name, role, birthday, license, controller }: IPayload) {
-    const token = sign({ id, name, role, birthday, license, controller }, secret, {
+  makeToken({ id, name, driver, admin, birthday, license, controller }: IPayload) {
+    const token = sign({ id, name, driver, admin, birthday, license, controller }, secret, {
       expiresIn: '24h',
     });
     return token;

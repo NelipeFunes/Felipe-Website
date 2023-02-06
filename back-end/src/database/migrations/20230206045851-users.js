@@ -24,9 +24,16 @@ module.exports = {
         type: Sequelize.STRING,
       },
   
-      role: {
-        allowNull: false,
-        type: Sequelize.STRING,
+      driver: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
+
+      admin: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
   
       birthday: {

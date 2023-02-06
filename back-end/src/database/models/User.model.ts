@@ -1,3 +1,4 @@
+import { BOOLEAN } from 'sequelize';
 import { Model, INTEGER, STRING, DATEONLY } from 'sequelize';
 import db from '.';
 
@@ -6,7 +7,8 @@ class User extends Model {
   name!: string;
   email!: string;
   password!: string;
-  role!: string;
+  driver!: boolean;
+  admin!: boolean;
   birthday!: Date;
   license!: number;
   controller!: string;
@@ -37,9 +39,16 @@ User.init(
       type: STRING,
     },
 
-    role: {
-      allowNull: false,
-      type: STRING,
+    driver: {
+      allowNull: true,
+      type: BOOLEAN,
+      defaultValue: true,
+    },
+
+    admin: {
+      allowNull: true,
+      type: BOOLEAN,
+      defaultValue: false,
     },
 
     birthday: {
