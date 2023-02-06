@@ -12,19 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const bcryptjs_1 = require("bcryptjs");
 const User_model_1 = __importDefault(require("../database/models/User.model"));
 const UserService = {
-    createUser() {
+    createUser({ name, password, email, role, birthday, controller }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const hashedPass = yield (0, bcryptjs_1.hash)(password, 10);
+            const user = yield User_model_1.default.create({ name, password: hashedPass, email, role, birthday, controller });
+            return user;
+        });
     },
     readUsers() {
         return __awaiter(this, void 0, void 0, function* () {
-            const users = yield User_model_1.default.findAll();
+            const users = yield User_model_1.default.findAll({
+                attributes: {
+                    exclude: ['password'],
+                },
+            });
             return users;
         });
     },
-    updateUsers() {
-    },
-    deleteUser() {
-    },
+    // updateUsers() {
+    // },
+    // deleteUser() {
+    // },
 };
 exports.default = UserService;

@@ -12,22 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.tokenMiddleware = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const http_status_1 = __importDefault(require("http-status"));
-const token_1 = __importDefault(require("../utils/token"));
-const User_service_1 = __importDefault(require("../services/User.service"));
-const UserController = {
-    createUser(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const users = yield User_service_1.default.createUser(req.body);
-            const token = token_1.default.makeToken(users);
-            return res.status(http_status_1.default.CREATED).json({ token });
-        });
-    },
-    readUsers(_req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const users = yield User_service_1.default.readUsers();
-            return res.status(http_status_1.default.OK).json(users);
-        });
-    },
-};
-exports.default = UserController;
+const error_middleware_1 = require("./error.middleware");
+// import { IReqUser } from '../interfaces/Request.interface';
+const secret = process.env.JWT_SECRET || 'jwtsecret';
+const tokenMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { authorization: token } = req.headers;
+    if (!token) {
+        throw new error_middleware_1.ErrorHandler('Token not found', http_status_1.default.UNAUTHORIZED);
+    }
+    try {
+        const decoded = jsonwebtoken_1.default.verify(token, secret);
+        req.token = decoded;
+        next();
+    }
+    catch (err) {
+        res.status(http_status_1.default.UNAUTHORIZED).json({ message: 'Jwt malformed' });
+    }
+});
+exports.tokenMiddleware = tokenMiddleware;

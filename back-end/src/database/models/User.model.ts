@@ -3,10 +3,11 @@ import db from '.';
 
 class User extends Model {
   id!: number;
+  name!: string;
   email!: string;
   password!: string;
   role!: string;
-  age!: Date;
+  birthday!: Date;
   license!: number;
   controller!: string;
 }
@@ -23,12 +24,12 @@ User.init(
     name: {
       allowNull: false,
       type: STRING,
-      unique: true,
     },
     
     email: {
       allowNull: false,
       type: STRING,
+      unique: true
     },
 
     password: {

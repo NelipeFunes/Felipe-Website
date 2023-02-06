@@ -4,7 +4,7 @@ export default interface IUser {
   name: string;
   password: string;
   role: string;
-  age: Date;
+  birthday: Date;
   license: number;
   controller: string;
 }

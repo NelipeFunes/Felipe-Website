@@ -1,6 +1,5 @@
-// ./index.ts
-
 import express from 'express';
+import 'express-async-errors';
 import errorMiddleware from './middlewares/error.middleware';
 import UserRoute from './routes/User.route';
 

@@ -17,11 +17,11 @@ User.init({
     name: {
         allowNull: false,
         type: sequelize_1.STRING,
-        unique: true,
     },
     email: {
         allowNull: false,
         type: sequelize_1.STRING,
+        unique: true
     },
     password: {
         allowNull: false,
