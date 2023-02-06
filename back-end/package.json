@@ -9,9 +9,8 @@
     "start": "npm run build && node ./build/index.js",
     "db:migrate": "npx -y tsc && npx sequelize db:migrate",
     "build": "tsc",
-    "db:reset": "npx -y typescript tsc && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
-    "db:start": "npm run db:reset && npm start",
-    "docker": "npm run db:reset && npm start"
+    "db:reset": "npx tsc && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:start": "npm run db:reset && npm start"
   },
   "keywords": [],
   "author": "",
@@ -33,7 +32,7 @@
     "nodemon": "^2.0.20",
     "sequelize-cli": "^6.6.0",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -41,6 +40,7 @@
     "@types/http-status": "^1.1.2",
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^8.5.9",
+    "@types/nodemailer": "^6.4.7",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

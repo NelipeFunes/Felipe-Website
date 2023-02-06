@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcryptjs_1 = require("bcryptjs");
 const http_status_1 = __importDefault(require("http-status"));
 const joi_1 = __importDefault(require("joi"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
 const User_model_1 = __importDefault(require("../database/models/User.model"));
 const error_middleware_1 = require("../middlewares/error.middleware");
 const UserService = {
@@ -39,17 +40,37 @@ const UserService = {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield User_model_1.default.findOne({ where: { email } });
             if (!user)
-                throw new error_middleware_1.ErrorHandler('User not found', http_status_1.default.NOT_FOUND);
+                throw new error_middleware_1.ErrorHandler('Invalid Email', http_status_1.default.NOT_FOUND);
             const check = yield (0, bcryptjs_1.compare)(password, user.password);
             if (!check)
                 throw new error_middleware_1.ErrorHandler('Invalid Password', http_status_1.default.UNAUTHORIZED);
             return user;
         });
     },
+    sendEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const transport = nodemailer_1.default.createTransport({
+                host: 'smtp.gmail.com',
+                port: 587,
+                auth: {
+                    user: 'felipedevnunes@gmail.com',
+                    pass: 'rhxststbnwhlzjiz',
+                },
+            });
+            transport.sendMail({
+                from: 'Erasmo Bacco <felipedevnunes@gmail.com>',
+                to: email,
+                subject: 'Bem vindo a CDR',
+                text: 'Fala marciao, bem vindo a nossa nova, '
+                    + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe',
+            });
+        });
+    },
     createUser({ name, password, email, driver, admin, birthday, controller }) {
         return __awaiter(this, void 0, void 0, function* () {
             const hashedPass = yield (0, bcryptjs_1.hash)(password, 10);
             const user = yield User_model_1.default.create({ name, password: hashedPass, email, driver, admin, birthday, controller });
+            yield this.sendEmail(email);
             return user;
         });
     },
