@@ -13,16 +13,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const bcryptjs_1 = require("bcryptjs");
-// import Joi from 'joi';
+const http_status_1 = __importDefault(require("http-status"));
+const joi_1 = __importDefault(require("joi"));
 const User_model_1 = __importDefault(require("../database/models/User.model"));
+const error_middleware_1 = require("../middlewares/error.middleware");
 const UserService = {
-    // validateBody(body) {
-    //   const schema = Joi.object({
-    //     name: Joi.string().required(),
-    //     password: Joi.string().required().min(5),
-    //     email: Joi.string().email().required(),
-    //   })
-    // },
+    validateBody(body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const schema = joi_1.default.object({
+                name: joi_1.default.string().required(),
+                password: joi_1.default.string().required().min(5),
+                email: joi_1.default.string().email().required(),
+                birthday: joi_1.default.date().required(),
+                controller: joi_1.default.string().required().min(5),
+            });
+            const { error } = schema.validate(body);
+            if (error)
+                throw new error_middleware_1.ErrorHandler(error.message, http_status_1.default.BAD_REQUEST);
+            const exists = yield User_model_1.default.findOne({ where: { email: body.email } });
+            if (exists)
+                throw new error_middleware_1.ErrorHandler('Email already in use', http_status_1.default.UNAUTHORIZED);
+        });
+    },
     createUser({ name, password, email, driver, admin, birthday, controller }) {
         return __awaiter(this, void 0, void 0, function* () {
             const hashedPass = yield (0, bcryptjs_1.hash)(password, 10);

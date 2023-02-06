@@ -18,6 +18,7 @@ const User_service_1 = __importDefault(require("../services/User.service"));
 const UserController = {
     createUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield User_service_1.default.validateBody(req.body);
             const users = yield User_service_1.default.createUser(req.body);
             const token = token_1.default.makeToken(users);
             return res.status(http_status_1.default.CREATED).json({ token });

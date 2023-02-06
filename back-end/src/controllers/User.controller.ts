@@ -7,6 +7,7 @@ import UserService from '../services/User.service';
 const UserController = {
 
   async createUser(req: Request, res: Response) {
+    await UserService.validateBody(req.body);
     const users = await UserService.createUser(req.body);
     const token = Token.makeToken(users);
     return res.status(httpStatus.CREATED).json({ token });
