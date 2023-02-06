@@ -30,5 +30,12 @@ const UserController = {
             return res.status(http_status_1.default.OK).json(users);
         });
     },
+    logIn(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield User_service_1.default.logIn(req.body);
+            const token = token_1.default.makeToken(user);
+            return res.status(http_status_1.default.OK).json({ token });
+        });
+    },
 };
 exports.default = UserController;

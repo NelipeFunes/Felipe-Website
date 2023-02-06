@@ -43,6 +43,7 @@ const UserService = {
             const check = yield (0, bcryptjs_1.compare)(password, user.password);
             if (!check)
                 throw new error_middleware_1.ErrorHandler('Invalid Password', http_status_1.default.UNAUTHORIZED);
+            return user;
         });
     },
     createUser({ name, password, email, driver, admin, birthday, controller }) {
@@ -62,11 +63,11 @@ const UserService = {
             return users;
         });
     },
-    // async updateUsers({ email, password }: IUser) {
-    //   await this.verifyUser(email, password);
-    //   await User.update({})
-    // },
-    // deleteUser() {
-    // },
+    logIn({ email, password }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield this.verifyUser(email, password);
+            return user;
+        });
+    },
 };
 exports.default = UserService;

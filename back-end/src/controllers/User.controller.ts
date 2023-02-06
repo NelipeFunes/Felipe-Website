@@ -17,5 +17,11 @@ const UserController = {
     const users = await UserService.readUsers();
     return res.status(httpStatus.OK).json(users);
   },
+
+  async logIn(req:Request, res: Response) {
+    const user = await UserService.logIn(req.body);
+    const token = Token.makeToken(user);
+    return res.status(httpStatus.OK).json({ token });
+  },
 };
 export default UserController;

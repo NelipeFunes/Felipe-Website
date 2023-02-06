@@ -6,7 +6,7 @@ import IUser from '../interfaces/User.interface';
 import { ErrorHandler } from '../middlewares/error.middleware';
 
 const UserService = {
-  async validateBody(body: IUser) {
+  async validateBody(body: IUser): Promise<void> {
     const schema = Joi.object({
       name: Joi.string().required(),
       password: Joi.string().required().min(5),
@@ -21,11 +21,12 @@ const UserService = {
     if (exists) throw new ErrorHandler('Email already in use', httpStatus.UNAUTHORIZED);
   },
 
-  async verifyUser(email: string, password: string) {
+  async verifyUser(email: string, password: string): Promise<User> {
     const user = await User.findOne({ where: { email } });
-    if (!user) throw new ErrorHandler('User not found', httpStatus.NOT_FOUND);
+    if (!user) throw new ErrorHandler('Invalid Email', httpStatus.NOT_FOUND);
     const check = await compare(password, user.password);
     if (!check) throw new ErrorHandler('Invalid Password', httpStatus.UNAUTHORIZED);
+    return user;
   },
 
   async createUser(
@@ -47,14 +48,10 @@ const UserService = {
     return users;
   },
 
-  // async updateUsers({ email, password }: IUser) {
-  //   await this.verifyUser(email, password);
-  //   await User.update({})
-  // },
-
-  // deleteUser() {
-
-  // },
+  async logIn({ email, password }: IUser) {
+    const user = await this.verifyUser(email, password);
+    return user;
+  },
 };
 
 export default UserService;

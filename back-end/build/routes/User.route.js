@@ -8,6 +8,9 @@ const User_controller_1 = __importDefault(require("../controllers/User.controlle
 const token_middleware_1 = require("../middlewares/token.middleware");
 const UserRoute = (0, express_1.Router)();
 UserRoute.route('/')
-    .get(token_middleware_1.tokenMiddleware, User_controller_1.default.readUsers)
+    .get(token_middleware_1.tokenMiddleware, User_controller_1.default.readUsers);
+UserRoute.route('/register')
     .post(User_controller_1.default.createUser);
+UserRoute.route('/login')
+    .post(User_controller_1.default.logIn);
 exports.default = UserRoute;
