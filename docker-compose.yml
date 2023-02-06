@@ -6,7 +6,7 @@ services:
     build: ./back-end
     ports:
       - 3001:3001
-    command: npm start
+    command: npm run docker
     working_dir: /app-backend
     tty: true
 
