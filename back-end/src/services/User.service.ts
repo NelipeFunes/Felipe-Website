@@ -1,12 +1,12 @@
-import { hash } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 import httpStatus from 'http-status';
 import Joi from 'joi';
 import User from '../database/models/User.model';
+import IUser from '../interfaces/User.interface';
 import { ErrorHandler } from '../middlewares/error.middleware';
-import { IPayload } from '../utils/token';
 
 const UserService = {
-  async validateBody(body: IPayload) {
+  async validateBody(body: IUser) {
     const schema = Joi.object({
       name: Joi.string().required(),
       password: Joi.string().required().min(5),
@@ -19,6 +19,13 @@ const UserService = {
     if (error) throw new ErrorHandler(error.message, httpStatus.BAD_REQUEST);
     const exists = await User.findOne({ where: { email: body.email } });
     if (exists) throw new ErrorHandler('Email already in use', httpStatus.UNAUTHORIZED);
+  },
+
+  async verifyUser(email: string, password: string) {
+    const user = await User.findOne({ where: { email } });
+    if (!user) throw new ErrorHandler('User not found', httpStatus.NOT_FOUND);
+    const check = await compare(password, user.password);
+    if (!check) throw new ErrorHandler('Invalid Password', httpStatus.UNAUTHORIZED);
   },
 
   async createUser(
@@ -40,8 +47,9 @@ const UserService = {
     return users;
   },
 
-  // updateUsers() {
-
+  // async updateUsers({ email, password }: IUser) {
+  //   await this.verifyUser(email, password);
+  //   await User.update({})
   // },
 
   // deleteUser() {

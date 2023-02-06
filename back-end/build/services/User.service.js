@@ -35,6 +35,16 @@ const UserService = {
                 throw new error_middleware_1.ErrorHandler('Email already in use', http_status_1.default.UNAUTHORIZED);
         });
     },
+    verifyUser(email, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield User_model_1.default.findOne({ where: { email } });
+            if (!user)
+                throw new error_middleware_1.ErrorHandler('User not found', http_status_1.default.NOT_FOUND);
+            const check = yield (0, bcryptjs_1.compare)(password, user.password);
+            if (!check)
+                throw new error_middleware_1.ErrorHandler('Invalid Password', http_status_1.default.UNAUTHORIZED);
+        });
+    },
     createUser({ name, password, email, driver, admin, birthday, controller }) {
         return __awaiter(this, void 0, void 0, function* () {
             const hashedPass = yield (0, bcryptjs_1.hash)(password, 10);
@@ -52,7 +62,9 @@ const UserService = {
             return users;
         });
     },
-    // updateUsers() {
+    // async updateUsers({ email, password }: IUser) {
+    //   await this.verifyUser(email, password);
+    //   await User.update({})
     // },
     // deleteUser() {
     // },

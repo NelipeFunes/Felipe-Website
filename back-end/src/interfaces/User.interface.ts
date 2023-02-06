@@ -3,7 +3,8 @@ export default interface IUser {
   email:string;
   name: string;
   password: string;
-  role: string;
+  driver: string;
+  admin: string;
   birthday: Date;
   license: number;
   controller: string;
