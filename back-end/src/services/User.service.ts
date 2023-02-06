@@ -30,7 +30,7 @@ const UserService = {
     return user;
   },
 
-  async sendEmail(email:string) {
+  async sendEmail(email:string, subject: string, text: string) {
     const transport = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -42,9 +42,8 @@ const UserService = {
     transport.sendMail({
       from: 'Erasmo Bacco <felipedevnunes@gmail.com>',
       to: email,
-      subject: 'Bem vindo a CDR',
-      text: 'Fala marciao, bem vindo a nossa nova, '
-      + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe',
+      subject,
+      text,
     });
   },
 
@@ -55,7 +54,8 @@ const UserService = {
     const user = await User.create(
       { name, password: hashedPass, email, driver, admin, birthday, controller },
     );
-    await this.sendEmail(email);
+    await this.sendEmail(email, 'Bem vindo a CDR', 'Fala marciao, bem vindo a nossa nova, '
+    + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe');
     return user;
   },
 
