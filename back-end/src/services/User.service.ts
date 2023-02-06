@@ -1,22 +1,22 @@
-import User from "../database/models/User.model"
+import User from '../database/models/User.model';
 
 const UserService = {
-  createUser() {
+  // createUser() {
 
-  },
+  // },
 
   async readUsers(): Promise<User[]> {
     const users = await User.findAll();
     return users;
   },
 
-  updateUsers() {
+  // updateUsers() {
 
-  },
+  // },
 
-  deleteUser() {
+  // deleteUser() {
 
-  },
+  // },
 };
 
-export default UserService
+export default UserService;

@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import httpStatus from "http-status";
-import UserService from "../services/User.service"
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import UserService from '../services/User.service';
 
 const UserController = {
   async readUsers(_req: Request, res: Response) {

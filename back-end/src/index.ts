@@ -1,6 +1,7 @@
 // ./index.ts
 
 import express from 'express';
+import errorMiddleware from './middlewares/error.middleware';
 import UserRoute from './routes/User.route';
 
 const app = express();
@@ -14,7 +15,9 @@ app.get('/', (_req, res) => {
   res.status(200).send('Express + TypeScript');
 });
 
-app.use('/users', UserRoute)
+app.use('/users', UserRoute);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

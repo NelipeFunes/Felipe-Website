@@ -14,14 +14,14 @@ User.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    email: {
-        allowNull: false,
-        type: sequelize_1.STRING,
-    },
     name: {
         allowNull: false,
         type: sequelize_1.STRING,
         unique: true,
+    },
+    email: {
+        allowNull: false,
+        type: sequelize_1.STRING,
     },
     password: {
         allowNull: false,
