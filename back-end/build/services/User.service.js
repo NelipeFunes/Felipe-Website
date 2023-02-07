@@ -47,7 +47,7 @@ const UserService = {
             return user;
         });
     },
-    sendEmail(email) {
+    sendEmail(email, subject, text) {
         return __awaiter(this, void 0, void 0, function* () {
             const transport = nodemailer_1.default.createTransport({
                 host: 'smtp.gmail.com',
@@ -60,9 +60,10 @@ const UserService = {
             transport.sendMail({
                 from: 'Erasmo Bacco <felipedevnunes@gmail.com>',
                 to: email,
-                subject: 'Bem vindo a CDR',
-                text: 'Fala marciao, bem vindo a nossa nova, '
-                    + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe',
+                subject,
+                html: '<h1>Bem vindo a CDR, Fala marciao, bem vindo a nossa nova, </h1>'
+                    + '<h1>liguinha nao, MAJOR DE F1 a CDR League, e se não gostar meu velho</h1>'
+                    + '<h1>, muda de canal, tira equipe</h1><img src="https://media.discordapp.net/attachments/544012470730096689/1072285042732179527/unknown_4.png"></img>',
             });
         });
     },
@@ -70,7 +71,8 @@ const UserService = {
         return __awaiter(this, void 0, void 0, function* () {
             const hashedPass = yield (0, bcryptjs_1.hash)(password, 10);
             const user = yield User_model_1.default.create({ name, password: hashedPass, email, driver, admin, birthday, controller });
-            yield this.sendEmail(email);
+            yield this.sendEmail(email, 'Bem vindo a CDR', 'Fala marciao, bem vindo a nossa nova, '
+                + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe');
             return user;
         });
     },

@@ -31,24 +31,20 @@ const UserService = {
   },
 
   async sendEmail(email:string, subject: string, text: string) {
-    try {
-      const transport = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        auth: {
-          user: 'felipedevnunes@gmail.com',
-          pass: 'rhxststbnwhlzjiz',
-        },
-      });
-      transport.sendMail({
-        from: 'Erasmo Bacco <felipedevnunes@gmail.com>',
-        to: email,
-        subject,
-        text,
-      });
-    } catch (error) {
-      throw new Error('algo deu errado');
-    }
+    const transport = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EM_PASS,
+      },
+    });
+    transport.sendMail({
+      from: 'Erasmo Bacco <felipedevnunes@gmail.com>',
+      to: email,
+      subject,
+      text,
+    });
   },
 
   async createUser(
