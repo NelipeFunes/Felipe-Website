@@ -11,7 +11,7 @@ services:
     environment:
       - DB_USER=root
       - DB_PASS=123456
-      - DB_NAME=cdr_db
+      - DB_NAME=curso_db
       - DB_HOST=db
       - DB_PORT=3306
       - JWT_SECRET=jwtsecret
@@ -27,5 +27,5 @@ services:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=cdr_db
+      - MYSQL_DATABASE=curso_db
     restart: 'always'
