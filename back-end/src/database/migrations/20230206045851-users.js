@@ -23,12 +23,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-  
-      driver: {
-        allowNull: true,
-        type: Sequelize.BOOLEAN,
-        defaultValue: true,
-      },
 
       admin: {
         allowNull: true,
@@ -39,12 +33,6 @@ module.exports = {
       birthday: {
         allowNull: false,
         type: Sequelize.DATEONLY,
-      },
-  
-      license: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
       },
   
       controller: {

@@ -48,11 +48,11 @@ const UserService = {
   },
 
   async createUser(
-    { name, password, email, driver, admin, birthday, controller }: User,
+    { name, password, email, admin, birthday, controller }: User,
   ): Promise<User> {
     const hashedPass = await hash(password, 10);
     const user = await User.create(
-      { name, password: hashedPass, email, driver, admin, birthday, controller },
+      { name, password: hashedPass, email, admin, birthday, controller },
     );
     await this.sendEmail(email, 'Bem vindo a CDR', 'Fala marciao, bem vindo a nossa nova, '
     + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe');

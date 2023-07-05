@@ -7,10 +7,8 @@ class User extends Model {
   name!: string;
   email!: string;
   password!: string;
-  driver!: boolean;
   admin!: boolean;
   birthday!: Date;
-  license!: number;
   controller!: string;
 }
 
@@ -39,12 +37,6 @@ User.init(
       type: STRING,
     },
 
-    driver: {
-      allowNull: true,
-      type: BOOLEAN,
-      defaultValue: true,
-    },
-
     admin: {
       allowNull: true,
       type: BOOLEAN,
@@ -54,12 +46,6 @@ User.init(
     birthday: {
       allowNull: false,
       type: DATEONLY,
-    },
-
-    license: {
-      allowNull: false,
-      type: INTEGER,
-      defaultValue: 0,
     },
 
     controller: {
