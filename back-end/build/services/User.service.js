@@ -27,6 +27,7 @@ const UserService = {
                 email: joi_1.default.string().email().required(),
                 birthday: joi_1.default.date().required(),
                 controller: joi_1.default.string().required().min(5),
+                platform: joi_1.default.string().required(),
             });
             const { error } = schema.validate(body);
             if (error)
@@ -53,24 +54,22 @@ const UserService = {
                 host: 'smtp.gmail.com',
                 port: 587,
                 auth: {
-                    user: 'felipedevnunes@gmail.com',
-                    pass: 'rhxststbnwhlzjiz',
+                    user: process.env.EMAIL,
+                    pass: process.env.EM_PASS,
                 },
             });
             transport.sendMail({
                 from: 'Erasmo Bacco <felipedevnunes@gmail.com>',
                 to: email,
                 subject,
-                html: '<h1>Bem vindo a CDR, Fala marciao, bem vindo a nossa nova, </h1>'
-                    + '<h1>liguinha nao, MAJOR DE F1 a CDR League, e se não gostar meu velho</h1>'
-                    + '<h1>, muda de canal, tira equipe</h1><img src="https://media.discordapp.net/attachments/544012470730096689/1072285042732179527/unknown_4.png"></img>',
+                text,
             });
         });
     },
-    createUser({ name, password, email, driver, admin, birthday, controller }) {
+    createUser({ name, password, email, admin, birthday, controller }) {
         return __awaiter(this, void 0, void 0, function* () {
             const hashedPass = yield (0, bcryptjs_1.hash)(password, 10);
-            const user = yield User_model_1.default.create({ name, password: hashedPass, email, driver, admin, birthday, controller });
+            const user = yield User_model_1.default.create({ name, password: hashedPass, email, admin, birthday, controller });
             yield this.sendEmail(email, 'Bem vindo a CDR', 'Fala marciao, bem vindo a nossa nova, '
                 + 'liguinha nao, MAJOR DE F1 a CDR League, e se não gostar, muda de canal, tira equipe');
             return user;

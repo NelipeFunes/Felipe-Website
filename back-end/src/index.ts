@@ -1,11 +1,13 @@
 import express from 'express';
 import 'express-async-errors';
+import cors from 'cors';
 import errorMiddleware from './middlewares/error.middleware';
 import UserRoute from './routes/User.route';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 const PORT = 3001;
 

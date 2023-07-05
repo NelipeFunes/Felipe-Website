@@ -28,11 +28,6 @@ User.init({
         allowNull: false,
         type: sequelize_2.STRING,
     },
-    driver: {
-        allowNull: true,
-        type: sequelize_1.BOOLEAN,
-        defaultValue: true,
-    },
     admin: {
         allowNull: true,
         type: sequelize_1.BOOLEAN,
@@ -42,13 +37,12 @@ User.init({
         allowNull: false,
         type: sequelize_2.DATEONLY,
     },
-    license: {
-        allowNull: false,
-        type: sequelize_2.INTEGER,
-        defaultValue: 0,
-    },
     controller: {
         allowNull: true,
+        type: sequelize_2.STRING,
+    },
+    platform: {
+        allowNull: false,
         type: sequelize_2.STRING,
     }
 }, {

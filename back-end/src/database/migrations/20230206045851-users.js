@@ -38,7 +38,12 @@ module.exports = {
       controller: {
         allowNull: true,
         type: Sequelize.STRING,
-      }
+      },
+
+      platform: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
 
     });
   },

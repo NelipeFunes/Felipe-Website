@@ -14,6 +14,7 @@ const UserService = {
       email: Joi.string().email().required(),
       birthday: Joi.date().required(),
       controller: Joi.string().required().min(5),
+      platform: Joi.string().required(),
     });
 
     const { error } = schema.validate(body);

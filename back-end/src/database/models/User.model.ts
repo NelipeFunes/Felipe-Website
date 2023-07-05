@@ -10,6 +10,7 @@ class User extends Model {
   admin!: boolean;
   birthday!: Date;
   controller!: string;
+  platform!: string;
 }
 
 User.init(
@@ -51,7 +52,13 @@ User.init(
     controller: {
       allowNull: true,
       type: STRING,
+    },
+
+    platform: {
+      allowNull: false,
+      type: STRING,
     }
+    
   },
   {
     sequelize: db,

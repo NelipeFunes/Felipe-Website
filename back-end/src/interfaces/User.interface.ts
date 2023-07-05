@@ -6,4 +6,7 @@ export default interface IUser {
   admin: string;
   birthday: Date;
   controller: string;
+  platform: string;
 }
+
+// Adicionar plataforma

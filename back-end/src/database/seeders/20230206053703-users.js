@@ -9,6 +9,7 @@ module.exports = {
         admin: true,
         birthday: new Date('1999-08-25'),
         controller: 'Fanatec DD1',
+        platform: 'PC',
       },
     ], {});
   },
